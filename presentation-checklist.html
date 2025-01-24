@@ -77,6 +77,9 @@
          #input-search-result div:hover{
 background: #ddd;
         }
+        textarea{
+            width: 100%;
+        }
         button{
             width: 100%;
             padding: 10px;
@@ -152,10 +155,7 @@ background: #ddd;
                    
                 </tbody>
             </table>
-            <div id="analitic_preview">
-               <div>Total shows (<span id="total_shows"></span>)</div>
-               <div>Failed shows (<span id="failed_shows"></span>)</div>
-            </div>
+           
             <div id="confirm-btn">
                 <button>Send entry</button>
                 <button style="background-color: rgb(215, 67, 67);" onclick="close_modal()">Cancel</button>
@@ -166,7 +166,7 @@ background: #ddd;
       <div id="app-wrapper">
           <div id="heading">
             <img src="logo.webp">
-             <h1>Cinema Show Report</h1>
+             <h1>Presentation Checklist</h1>
           </div>
           <form id="form">
               <div class="form-group">
@@ -175,13 +175,37 @@ background: #ddd;
                  <input type="hidden" value="" id="location" name="location" >
                  <div id="input-search-result"></div>
               </div>
-              <div id="shows-lister">
-                
-              </div>
+            <div class="form-group">
+                <label>Sound Level</label>
+            
+                <div class="show-ops"><input type="radio" name="sound_level" value="great"><span>Great</span></div>
+                <div class="show-ops need_comment"><input type="radio" name="sound_level" value="poor"><span>Poor</span></div>
+                <div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Managers Name</label>
+                <input type="text" name="managers_name" id="">
+            </div>
+            <div class="form-group">
+                <label>Workers Name</label>
+                <input type="text" name="workers_name" id="">
+            </div>
+            <div class="form-group">
+                <label>Comment</label>
+                <textarea type="text" name="comment" rows="5"></textarea>
+            </div>
               <button>Submit</button>
           </form>
       </div>
       <script>
+       var nc = document.getElementsByClassName("need_comment");
+       for(let i = 0; i < nc.length; i++){
+          nc[i].onclick = function(e){
+            this.children[0].checked = true
+          }
+       }
     const filmhouse = [
         "Lagos - Leisure Mall, Surulere",
         "Lagos - Lekki IMAX",
@@ -213,18 +237,7 @@ background: #ddd;
         
       }
        
-        var sl = "";
-        for (let i = 1; i < 31; i++) {
-            sl += `<div class="form-group">
-                    <label>Show ${i}</label>
-                    
-                    <div class="show-ops"><input type="radio" name="show_${i}" value="1"><span>Shown</span></div> 
-                    <div class="show-ops"><input type="radio" name="show_${i}" value="0"><span>Not shown</span></div>
-                    
-                    <div></div>
-                </div>`;
-        }
-        document.getElementById("shows-lister").innerHTML = sl;
+
         document.getElementById("form").onsubmit = async function(e){
             e.preventDefault();
              const data = new FormData(this);
@@ -258,8 +271,6 @@ background: #ddd;
                    `;
         }
             document.getElementById("entries").innerHTML= entries;
-            document.getElementById("failed_shows").innerText = failed;
-            document.getElementById("total_shows").innerText = Object.keys(data).length - 1;
             document.getElementById("modal").style.display = "flex";
         }
         function sendEntry(data){

@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmhouse Cinemas Show Report</title>
+    <title>Filmhouse Cinema Show Report</title>
     <style>
         *{
             margin:0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color:#fff;
+        }
+        body{
+            background: #000;
         }
         #app-wrapper{
             max-width:900px;
             margin: 0 auto;
+        }
+        #heading{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+           padding: 10px;
+        }
+        #form{
+            padding: 10px;
         }
         .form-group{
         
@@ -28,13 +41,14 @@
             padding: 5px;
             width: 100%;
         }
+        input{
+            color:#000;
+        }
         .show-ops{
             display: inline-block;
-            margin-right: 100px;
+            margin-right: 50px;
         }
-         .show-ops span{
-           
-        }
+      
          .show-ops input{
              display: inline-block;
              width: auto;
@@ -45,6 +59,7 @@
             max-height: 300px;
             overflow-y: auto;
             background:#fff;
+            color: #000;
             position: absolute;
             z-index: 1;
         }
@@ -53,35 +68,36 @@
           padding:10px;
           font-size: 20px;
           cursor: pointer;
+          color: #000;
         }
          #input-search-result div:hover{
 background: #ddd;
+        }
+        button{
+            width: 100%;
+            padding: 10px;
+            color:#000;
         }
     </style>
 </head>
 <body>
       <div id="app-wrapper">
-          <div>
-             <h1>Filmhouse Cinemas Show Report</h1>
+          <div id="heading">
+            <img src="logo.webp">
+             <h1>Cinema Show Report</h1>
           </div>
-          <div id="form">
+          <form id="form">
               <div class="form-group">
                  <label>Location</label>
                  <input type="search" placeholder="Search location." id="search_loc">
-                 <input type="hidden" value="" id="location" name="location">
+                 <input type="hidden" value="" id="location" name="location" >
                  <div id="input-search-result"></div>
               </div>
               <div id="shows-lister">
-                <div class="form-group">
-                    <label>Show 1</label>
-                    
-                    <div class="show-ops"><input type="radio" name="show1" value="1"><span>Shown</span></div> 
-                    <div class="show-ops"><input type="radio" name="show1" value="0"><span>Not shown</span></div>
-                    
-                    <div></div>
-                </div>
+                
               </div>
-          </div>
+              <button>Submit</button>
+          </form>
       </div>
       <script>
     const filmhouse = [
@@ -115,6 +131,32 @@ background: #ddd;
         
       }
        
+        var sl = "";
+        for (let i = 1; i < 31; i++) {
+            sl += `<div class="form-group">
+                    <label>Show ${i}</label>
+                    
+                    <div class="show-ops"><input type="radio" name="show_${i}" value="1"><span>Shown</span></div> 
+                    <div class="show-ops"><input type="radio" name="show_${i}" value="0"><span>Not shown</span></div>
+                    
+                    <div></div>
+                </div>`;
+        }
+        document.getElementById("shows-lister").innerHTML = sl;
+        document.getElementById("form").onsubmit = async function(e){
+            e.preventDefault();
+            if(document.getElementById("location").value.length > 0){
+                const data = new FormData(this);
+                console.log(data);
+                const req = fetch("./", {
+                    method: "POST",
+                    body: data
+                });
+            }else{
+                document.getElementById("search_loc").focus()
+            }
+     
+        }
       </script>
 </body>
 </html>

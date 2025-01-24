@@ -79,6 +79,8 @@ background: #ddd;
         }
         textarea{
             width: 100%;
+            padding:5px;
+            color:#000;
         }
         button{
             width: 100%;
@@ -138,6 +140,10 @@ background: #ddd;
  font-size: 24px;
   color:#000;
         }
+        .poor_comments{
+            width: 100%;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -178,19 +184,58 @@ background: #ddd;
             <div class="form-group">
                 <label>Sound Level</label>
             
-                <div class="show-ops"><input type="radio" name="sound_level" value="great"><span>Great</span></div>
+                <div class="show-ops dont_need_comment"><input type="radio" name="sound_level" value="great"><span>Great</span></div>
                 <div class="show-ops need_comment"><input type="radio" name="sound_level" value="poor"><span>Poor</span></div>
-                <div>
-
+                <div class="poor_comments"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>Lights</label>
+            
+                <div class="show-ops dont_need_comment"><input type="radio" name="lights" value="great"><span>Great</span>
                 </div>
+                <div class="show-ops need_comment"><input type="radio" name="lights" value="poor"><span>Poor</span></div>
+                <div class="poor_comments"></div>
+            </div>
+            <div class="form-group">
+                <label>Focus</label>
+            
+                <div class="show-ops dont_need_comment"><input type="radio" name="focus" value="great"><span>Great</span>
+                </div>
+                <div class="show-ops need_comment"><input type="radio" name="focus" value="poor"><span>Poor</span></div>
+                <div class="poor_comments"></div>
+            </div>
+            <div class="form-group">
+                <label>Start time</label>
+
+                <div class="show-ops dont_need_comment"><input type="radio" name="start_time" value="great"><span>Great</span>
+                </div>
+                <div class="show-ops need_comment"><input type="radio" name="start_time" value="poor"><span>Poor</span></div>
+                <div class="poor_comments"></div>
+            </div>
+            <div class="form-group">
+                <label>Screen temprature</label>
+
+                <div class="show-ops dont_need_comment"><input type="radio" name="screen_temprature" value="great"><span>Great</span>
+                </div>
+                <div class="show-ops need_comment"><input type="radio" name="screen_temprature" value="poor"><span>Poor</span></div>
+                <div class="poor_comments"></div>
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+
+                <div class="show-ops dont_need_comment"><input type="radio" name="content" value="great"><span>Great</span>
+                </div>
+                <div class="show-ops need_comment"><input type="radio" name="content" value="poor"><span>Poor</span></div>
+                <div class="poor_comments"></div>
             </div>
             <div class="form-group">
                 <label>Managers Name</label>
-                <input type="text" name="managers_name" id="">
+                <input type="text" name="managers_name" id="" value="">
             </div>
             <div class="form-group">
                 <label>Workers Name</label>
-                <input type="text" name="workers_name" id="">
+                <input type="text" name="workers_name" id="" value="">
             </div>
             <div class="form-group">
                 <label>Comment</label>
@@ -200,12 +245,21 @@ background: #ddd;
           </form>
       </div>
       <script>
-       var nc = document.getElementsByClassName("need_comment");
+       var nc = document.getElementsByClassName("need_comment"),dnc = document.getElementsByClassName("dont_need_comment");
        for(let i = 0; i < nc.length; i++){
           nc[i].onclick = function(e){
-            this.children[0].checked = true
+            this.children[0].checked = true;
+            this.nextElementSibling.innerHTML = `<textarea type="text" name="${this.children[0].name}_comment" rows="3" placeholder="Please enter a comment." required></textarea>`;
           }
+          
        }
+              for (let i = 0; i < dnc.length; i++) {
+                    dnc[i].onclick = function (e) {
+                        this.children[0].checked = true;
+                        this.nextElementSibling.nextElementSibling.innerHTML = '';
+                    }
+
+                }
     const filmhouse = [
         "Lagos - Leisure Mall, Surulere",
         "Lagos - Lekki IMAX",

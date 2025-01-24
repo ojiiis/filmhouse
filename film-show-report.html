@@ -13,6 +13,7 @@
         }
         body{
             background: #000;
+            position: relative;
         }
         #app-wrapper{
             max-width:900px;
@@ -77,10 +78,76 @@ background: #ddd;
             width: 100%;
             padding: 10px;
             color:#000;
+            border:none;
+            outline: 0;
+            background:#fff;
+        }
+        #modal{
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top:0;
+            left:0;
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        #modal::before{
+            content:"";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            left:0;
+            top:0;
+            z-index: -1;
+            opacity: 0.95;
+        }
+        #modal-inner{
+            width: 70%;
+            height: 80%;
+            overflow-y: auto;
+           
+         
+        }
+        #modal-inner h2, #modal-inner table th,#modal-inner table td{
+             color:#000;
+        }
+         #confirm-btn button{
+          width: 45%;
+        }
+        #confirm-btn{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100px;
         }
     </style>
 </head>
 <body>
+    <div id="modal">
+          <div id="modal-inner">
+            <h2>Confirm your entry before submition</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Entry name</th>
+                        <th>Entry value</th>
+                    </tr>
+                </thead>
+                <tbody id="entries">
+                   
+                </tbody>
+            </table>
+            <div id="confirm-btn">
+                <button>Send entry</button>
+                <button style="background-color: rgb(215, 67, 67);" onclick="close_modal()">Cancel</button>
+            </div>
+          </div>
+    </div>
+
       <div id="app-wrapper">
           <div id="heading">
             <img src="logo.webp">
@@ -114,7 +181,7 @@ background: #ddd;
         "Imo - Owerri Mall"
     ];
         document.getElementById("search_loc").onkeyup = function(){
-               console.log(this.value);
+              // console.log(this.value);
               const searched = filmhouse.filter((i)=>{
                   return i.toLowerCase().includes(this.value.toLowerCase());
                });
@@ -147,15 +214,40 @@ background: #ddd;
             e.preventDefault();
             if(document.getElementById("location").value.length > 0){
                 const data = new FormData(this);
-                console.log(data);
-                const req = fetch("./", {
-                    method: "POST",
-                    body: data
-                });
+            const ad = {};
+              data.forEach((value,key)=>{
+                ad[key] = value;
+              
+              });
+              
+                show_modal(ad);
+               
             }else{
                 document.getElementById("search_loc").focus()
             }
      
+        }
+       const  close_modal = ()=>{
+            document.getElementById("modal").style.display = "none";
+        }
+       const show_modal = (data)=>{
+        let entries = "";
+        for(i in data){
+           
+            entries += ` <tr>
+                        <td>${i.replace("_"," ")}</td>
+                        <td>${data[i].replace(1,"Shown").replace(0, "Not shown") }</td>
+                    </tr>
+                   `;
+        }
+            document.getElementById("entries").innerHTML= entries;
+            document.getElementById("modal").style.display = "flex";
+        }
+        function sendEntry(data){
+             const req = fetch("./", {
+                method: "POST",
+                body: data
+            });
         }
       </script>
 </body>

@@ -56,7 +56,7 @@
               margin-right: 10px;
         }
         #search_loc{
-            color:#fff;
+            color:#000;
         }
         #input-search-result{
             width: 95.5%;
@@ -127,6 +127,14 @@ background: #ddd;
             align-items: center;
             height: 100px;
         }
+        #analitic_preview div{
+            color:#000;
+            font-size: 20px;
+        }
+        #analitic_preview div span{
+ font-size: 24px;
+  color:#000;
+        }
     </style>
 </head>
 <body>
@@ -144,6 +152,10 @@ background: #ddd;
                    
                 </tbody>
             </table>
+            <div id="analitic_preview">
+               <div>Total shows (<span id="total_shows"></span>)</div>
+               <div>Failed shows (<span id="failed_shows"></span>)</div>
+            </div>
             <div id="confirm-btn">
                 <button>Send entry</button>
                 <button style="background-color: rgb(215, 67, 67);" onclick="close_modal()">Cancel</button>
@@ -215,15 +227,17 @@ background: #ddd;
         document.getElementById("shows-lister").innerHTML = sl;
         document.getElementById("form").onsubmit = async function(e){
             e.preventDefault();
-            if(document.getElementById("location").value.length > 0){
-                const data = new FormData(this);
+             const data = new FormData(this);
             const ad = {};
-              data.forEach((value,key)=>{
+            var failed_shows = 0;
+            data.forEach((value, key) => {
                 ad[key] = value;
-              
-              });
-              
-                show_modal(ad);
+                if(key.includes('show') && value == 0){
+                       failed_shows++;
+                }
+            });
+            if(document.getElementById("location").value.length > 0 && Object.keys(ad).length > 1){
+               show_modal(ad, failed_shows);
                
             }else{
                 document.getElementById("search_loc").focus()
@@ -233,7 +247,7 @@ background: #ddd;
        const  close_modal = ()=>{
             document.getElementById("modal").style.display = "none";
         }
-       const show_modal = (data)=>{
+       const show_modal = (data,failed)=>{
         let entries = "";
         for(i in data){
            
@@ -244,6 +258,8 @@ background: #ddd;
                    `;
         }
             document.getElementById("entries").innerHTML= entries;
+            document.getElementById("failed_shows").innerText = failed;
+            document.getElementById("total_shows").innerText = Object.keys(data).length - 1;
             document.getElementById("modal").style.display = "flex";
         }
         function sendEntry(data){

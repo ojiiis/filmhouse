@@ -42,7 +42,8 @@
         }
         #input-search-result{
             width: 95.5%;
-            height: 400px;
+            max-height: 300px;
+            overflow-y: auto;
             background:#fff;
             position: absolute;
             z-index: 1;
@@ -66,12 +67,9 @@ background: #ddd;
           <div id="form">
               <div class="form-group">
                  <label>Location</label>
-                 <input type="search" placeholder="Search location.">
+                 <input type="search" placeholder="Search location." id="search_loc">
                  <input type="hidden" value="" id="location" name="location">
-                 <div id="input-search-result">
-                      <div>Input 1</div>
-                      <div>Input 1</div>
-                 </div>
+                 <div id="input-search-result"></div>
               </div>
               <div id="shows-lister">
                 <div class="form-group">
@@ -86,19 +84,37 @@ background: #ddd;
           </div>
       </div>
       <script>
-         const filmhouse = [
-                "Lagos - Leisure Mall, Surulere",
-                "Lagos - Lekki IMAX",
-                "Cross River - Marina, Calabar",
-                "Ondo - Akure",
-                "Oyo - Heritage Mall, Dugbe",
-                "Oyo - Ventura Mall, Samonda",
-                "Rivers - Port Harcourt Mall (Spar), Old GRA",
-                "Kano - Ado Bayero Mall, Kano",
-                "Delta - Asaba Mall",
-                "Edo - Kada Plaza, Benin City",
-                "Imo - Owerri Mall"
-            ];
+    const filmhouse = [
+        "Lagos - Leisure Mall, Surulere",
+        "Lagos - Lekki IMAX",
+        "Cross River - Marina, Calabar",
+        "Ondo - Akure",
+        "Oyo - Heritage Mall, Dugbe",
+        "Oyo - Ventura Mall, Samonda",
+        "Rivers - Port Harcourt Mall (Spar), Old GRA",
+        "Kano - Ado Bayero Mall, Kano",
+        "Delta - Asaba Mall",
+        "Edo - Kada Plaza, Benin City",
+        "Imo - Owerri Mall"
+    ];
+        document.getElementById("search_loc").onkeyup = function(){
+               console.log(this.value);
+              const searched = filmhouse.filter((i)=>{
+                  return i.toLowerCase().includes(this.value.toLowerCase());
+               });
+               var s = "";
+               for(let i = 0; i < searched.length; i++){
+                  s += `<div onclick='setvalue("${searched[i]}")'>${searched[i]}</div>`;
+               }
+              document.getElementById("input-search-result").innerHTML = s;
+        }
+      function setvalue(v){
+        document.getElementById("location").value = v;
+        document.getElementById("input-search-result").innerHTML = '';
+        document.getElementById("search_loc").value = v;
+        
+      }
+       
       </script>
 </body>
 </html>

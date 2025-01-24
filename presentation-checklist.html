@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmhouse Cinema Show Report</title>
+    <style>
+        *{
+            margin:0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color:#fff;
+        }
+        body{
+            background: #000;
+            position: relative;
+        }
+        #app-wrapper{
+            max-width:900px;
+            margin: 0 auto;
+        }
+        #heading{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+           padding: 10px;
+        }
+        #form{
+            padding: 10px;
+        }
+        .form-group{
+        
+            padding:20px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        label{
+            font-size: 25px;
+        }
+        label,input{
+            display:block;
+            padding: 5px;
+            width: 100%;
+        }
+        input{
+            color:#000;
+        }
+        .show-ops{
+            display: inline-block;
+            margin-right: 50px;
+        }
+      
+         .show-ops input{
+             display: inline-block;
+             width: auto;
+              margin-right: 10px;
+        }
+        #search_loc{
+            color:#000;
+        }
+        #input-search-result{
+            width: 95.5%;
+            max-height: 300px;
+            overflow-y: auto;
+            background:#fff;
+            color: #000;
+            position: absolute;
+            z-index: 1;
+        }
+        #input-search-result div{
+          width: 100%;
+          padding:10px;
+          font-size: 20px;
+          cursor: pointer;
+          color: #000;
+        }
+         #input-search-result div:hover{
+background: #ddd;
+        }
+        button{
+            width: 100%;
+            padding: 10px;
+            color:#000;
+            border:none;
+            outline: 0;
+            background:#fff;
+        }
+        #modal{
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top:0;
+            left:0;
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        #modal::before{
+            content:"";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            left:0;
+            top:0;
+            z-index: -1;
+            opacity: 0.95;
+        }
+        #modal-inner{
+            width: 70%;
+            height: 80%;
+            overflow-y: auto;
+           
+         
+        }
+        #modal-inner h2, #modal-inner table th,#modal-inner table td{
+             color:#000;
+        }
+         #confirm-btn button{
+          width: 45%;
+        }
+        #confirm-btn{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100px;
+        }
+        #analitic_preview div{
+            color:#000;
+            font-size: 20px;
+        }
+        #analitic_preview div span{
+ font-size: 24px;
+  color:#000;
+        }
+    </style>
+</head>
+<body>
+    <div id="modal">
+          <div id="modal-inner">
+            <h2>Confirm your entry before submition</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Entry name</th>
+                        <th>Entry value</th>
+                    </tr>
+                </thead>
+                <tbody id="entries">
+                   
+                </tbody>
+            </table>
+            <div id="analitic_preview">
+               <div>Total shows (<span id="total_shows"></span>)</div>
+               <div>Failed shows (<span id="failed_shows"></span>)</div>
+            </div>
+            <div id="confirm-btn">
+                <button>Send entry</button>
+                <button style="background-color: rgb(215, 67, 67);" onclick="close_modal()">Cancel</button>
+            </div>
+          </div>
+    </div>
+
+      <div id="app-wrapper">
+          <div id="heading">
+            <img src="logo.webp">
+             <h1>Cinema Show Report</h1>
+          </div>
+          <form id="form">
+              <div class="form-group">
+                 <label>Location</label>
+                 <input type="search" placeholder="Search location." id="search_loc">
+                 <input type="hidden" value="" id="location" name="location" >
+                 <div id="input-search-result"></div>
+              </div>
+              <div id="shows-lister">
+                
+              </div>
+              <button>Submit</button>
+          </form>
+      </div>
+      <script>
+    const filmhouse = [
+        "Lagos - Leisure Mall, Surulere",
+        "Lagos - Lekki IMAX",
+        "Cross River - Marina, Calabar",
+        "Ondo - Akure",
+        "Oyo - Heritage Mall, Dugbe",
+        "Oyo - Ventura Mall, Samonda",
+        "Rivers - Port Harcourt Mall (Spar), Old GRA",
+        "Kano - Ado Bayero Mall, Kano",
+        "Delta - Asaba Mall",
+        "Edo - Kada Plaza, Benin City",
+        "Imo - Owerri Mall"
+    ];
+        document.getElementById("search_loc").onkeyup = function(){
+              // console.log(this.value);
+              const searched = filmhouse.filter((i)=>{
+                  return i.toLowerCase().includes(this.value.toLowerCase());
+               });
+               var s = "";
+               for(let i = 0; i < searched.length; i++){
+                  s += `<div onclick='setvalue("${searched[i]}")'>${searched[i]}</div>`;
+               }
+              document.getElementById("input-search-result").innerHTML = s;
+        }
+      function setvalue(v){
+        document.getElementById("location").value = v;
+        document.getElementById("input-search-result").innerHTML = '';
+        document.getElementById("search_loc").value = v;
+        
+      }
+       
+        var sl = "";
+        for (let i = 1; i < 31; i++) {
+            sl += `<div class="form-group">
+                    <label>Show ${i}</label>
+                    
+                    <div class="show-ops"><input type="radio" name="show_${i}" value="1"><span>Shown</span></div> 
+                    <div class="show-ops"><input type="radio" name="show_${i}" value="0"><span>Not shown</span></div>
+                    
+                    <div></div>
+                </div>`;
+        }
+        document.getElementById("shows-lister").innerHTML = sl;
+        document.getElementById("form").onsubmit = async function(e){
+            e.preventDefault();
+             const data = new FormData(this);
+            const ad = {};
+            var failed_shows = 0;
+            data.forEach((value, key) => {
+                ad[key] = value;
+                if(key.includes('show') && value == 0){
+                       failed_shows++;
+                }
+            });
+            if(document.getElementById("location").value.length > 0 && Object.keys(ad).length > 1){
+               show_modal(ad, failed_shows);
+               
+            }else{
+                document.getElementById("search_loc").focus()
+            }
+     
+        }
+       const  close_modal = ()=>{
+            document.getElementById("modal").style.display = "none";
+        }
+       const show_modal = (data,failed)=>{
+        let entries = "";
+        for(i in data){
+           
+            entries += ` <tr>
+                        <td>${i.replace("_"," ")}</td>
+                        <td>${data[i].replace(1,"Shown").replace(0, "Not shown") }</td>
+                    </tr>
+                   `;
+        }
+            document.getElementById("entries").innerHTML= entries;
+            document.getElementById("failed_shows").innerText = failed;
+            document.getElementById("total_shows").innerText = Object.keys(data).length - 1;
+            document.getElementById("modal").style.display = "flex";
+        }
+        function sendEntry(data){
+             const req = fetch("./", {
+                method: "POST",
+                body: data
+            });
+        }
+      </script>
+</body>
+</html>

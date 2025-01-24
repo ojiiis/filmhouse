@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmhouse Cinemas Show Report</title>
+    <style>
+        *{
+            margin:0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #app-wrapper{
+            max-width:900px;
+            margin: 0 auto;
+        }
+        .form-group{
+        
+            padding:20px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        label{
+            font-size: 25px;
+        }
+        label,input{
+            display:block;
+            padding: 5px;
+            width: 100%;
+        }
+        .show-ops{
+            display: inline-block;
+            margin-right: 100px;
+        }
+         .show-ops span{
+           
+        }
+         .show-ops input{
+             display: inline-block;
+             width: auto;
+              margin-right: 10px;
+        }
+        #input-search-result{
+            width: 95.5%;
+            height: 400px;
+            background:#fff;
+            position: absolute;
+            z-index: 1;
+        }
+        #input-search-result div{
+          width: 100%;
+          padding:10px;
+          font-size: 20px;
+          cursor: pointer;
+        }
+         #input-search-result div:hover{
+background: #ddd;
+        }
+    </style>
+</head>
+<body>
+      <div id="app-wrapper">
+          <div>
+             <h1>Filmhouse Cinemas Show Report</h1>
+          </div>
+          <div id="form">
+              <div class="form-group">
+                 <label>Location</label>
+                 <input type="search" placeholder="Search location.">
+                 <input type="hidden" value="" id="location" name="location">
+                 <div id="input-search-result">
+                      <div>Input 1</div>
+                      <div>Input 1</div>
+                 </div>
+              </div>
+              <div id="shows-lister">
+                <div class="form-group">
+                    <label>Show 1</label>
+                    
+                    <div class="show-ops"><input type="radio" name="show1" value="1"><span>Shown</span></div> 
+                    <div class="show-ops"><input type="radio" name="show1" value="0"><span>Not shown</span></div>
+                    
+                    <div></div>
+                </div>
+              </div>
+          </div>
+      </div>
+      <script>
+         const filmhouse = [
+                "Lagos - Leisure Mall, Surulere",
+                "Lagos - Lekki IMAX",
+                "Cross River - Marina, Calabar",
+                "Ondo - Akure",
+                "Oyo - Heritage Mall, Dugbe",
+                "Oyo - Ventura Mall, Samonda",
+                "Rivers - Port Harcourt Mall (Spar), Old GRA",
+                "Kano - Ado Bayero Mall, Kano",
+                "Delta - Asaba Mall",
+                "Edo - Kada Plaza, Benin City",
+                "Imo - Owerri Mall"
+            ];
+      </script>
+</body>
+</html>

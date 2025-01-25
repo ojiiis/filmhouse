@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+        <div id="loading">
+            <div id="loading-inner">
+                <h2 id="loading-msg">Please wait while your data is been sent!</h2>
+                <div id="loading-image"></div>
+            </div>
+        </div>
     <div id="modal">
           <div id="modal-inner">
             
@@ -24,7 +30,7 @@
             </table>
            
             <div id="confirm-btn">
-                <button>Send entry</button>
+                <button id="senddata">Send entry</button>
                 <button style="background-color: rgb(215, 67, 67);" class="close">Cancel</button>
             </div>
           </div>
@@ -36,6 +42,7 @@
              <h1>Presentation Checklist</h1>
           </div>
           <form id="form">
+            <input type="hidden" name="for" value="checklist">
             <div class="right-btn">
                     <button>Submit</button>
             </div>

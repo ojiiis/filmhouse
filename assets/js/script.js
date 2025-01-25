@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const api = "https://lin.com.ng/filmhouse/index.php";
     // Event handlers for need_comment and dont_need_comment
     const nc = document.getElementsByClassName("need_comment"),
           dnc = document.getElementsByClassName("dont_need_comment");
@@ -81,12 +82,15 @@ if(document.getElementById("shows-lister")){
 
         if (document.getElementById("location").value && Object.keys(submissionData).length > 1) {
             showModal(submissionData, failedShows);
+            
         } else {
             document.getElementById("search_loc").focus();
         }
     };
 
     const showModal = (data, failed) => {
+        document.getElementById("senddata").setAttribute("data",JSON.stringify(data));
+        delete data.for;
         const entriesHTML = Object.entries(data)
             .map(([key, value]) => `
                 <tr>
@@ -105,4 +109,20 @@ if(document.getElementById("shows-lister")){
     document.getElementById("modal").querySelector(".close").onclick = () => {
         document.getElementById("modal").style.display = "none";
     };
+    document.getElementById("senddata").onclick = async ()=>{
+    document.getElementById("loading").style.display = "flex";
+     const req = await fetch(api,{
+      method:"POST",
+      body:document.getElementById("senddata").getAttribute("data")
+     });
+     const res = await req.json();
+     if(res.status == 1){
+        document.getElementById("loading-image").style.backgroundImage = `url('../../assets/images/check.gif')`;
+         document.getElementById("loading-msg").textContent = `Your data has been sent and submited!`;
+             setTimeout(()=>{
+          location.reload()
+     },3000);
+     }
+
+    }
 });

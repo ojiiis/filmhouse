@@ -120,8 +120,8 @@ if(document.getElementById("shows-lister")){
         document.getElementById("loading-image").style.backgroundImage = `url('assets/images/check.gif')`;
          document.getElementById("loading-msg").textContent = `Your data has been sent and submited!`;
              setTimeout(()=>{
-         // location.reload()
-         document.getElementById("loading").style.display = "none";
+          location.reload()
+         //document.getElementById("loading").style.display = "none";
      },3000);
      }
 

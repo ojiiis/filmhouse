@@ -177,7 +177,7 @@ button {
 }
 
 #modal-inner {
-    width: 70%;
+    width: 90%;
     height: 80%;
     overflow-y: auto;
 }
@@ -196,7 +196,7 @@ button {
 }
 
 #confirm-btn button {
-    /* width: 45%; */
+    font-size: 15px;
 }
 
 #analitic_preview div {

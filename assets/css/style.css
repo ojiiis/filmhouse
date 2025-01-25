@@ -183,8 +183,8 @@ button {
     margin-bottom: 40px;
 }
 #loading-inner #loading-image{
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     background-image: url('../../assets/images/loading1.webp');
     background-position: center;
     background-size: cover;

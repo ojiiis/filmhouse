@@ -52,22 +52,32 @@ color:#000;
          <div id="tab-header">
              <ul>
                 <li class="tab-selector active" data="presentation">Presentations</li>
-                <li data="tab-selector" data="show_report">Show report</li>
+                <li class="tab-selector" data="show_report">Show report</li>
              </ul>
          </div>
         <div class="tabs active" id="presentation">
             <div>
                 <div id="filter-opener"><h2>Filter <i class="fa fa-filter"></i></h2>
-                <i class="fa fa-angle-down"></i></div>
+                <i class="fa fa-angle-down" id="filter-icon"></i></div>
                 <div id="filter-content">
                     <div>From <input type="date"><input type="time"> </div>
                     <div>To <input type="date"><input type="time"> </div>
                 </div>
             </div>
-        1
+            <h3>Presentation Checklist</h3>
         </div>
         <div class="tabs" id="show_report">
-        2
+            <div>
+                <div id="filter-opener">
+                    <h2>Filter <i class="fa fa-filter"></i></h2>
+                    <i class="fa fa-angle-down" id="filter-icon"></i>
+                </div>
+                <div id="filter-content">
+                    <div>From <input type="date"><input type="time"> </div>
+                    <div>To <input type="date"><input type="time"> </div>
+                </div>
+            </div>
+           <h3>Film Show report</h3>
         </div>
      </div>
 
@@ -79,9 +89,33 @@ color:#000;
     <script>
         document.getElementById("filter-opener").onclick = ()=>{
             if(document.getElementById("filter-content").style.display == "" || document.getElementById("filter-content").style.display == "none"){
-                document.getElementById("filter-content").style.display = "block"
+                document.getElementById("filter-content").style.display = "block";
+                 document.getElementById("filter-icon").classList.remove("fa-angle-down");
+                 document.getElementById("filter-icon").classList.add("fa-angle-up");
             }else{
-                document.getElementById("filter-content").style.display = "none"
+                document.getElementById("filter-content").style.display = "none";
+                    document.getElementById("filter-icon").classList.remove("fa-angle-up");
+                document.getElementById("filter-icon").classList.add("fa-angle-down");
+            }
+        }
+        var tc = document.getElementsByClassName("tab-selector");
+        
+        for(let i = 0; i < tc.length; i++){
+            tc[i].onclick = ()=>{
+                closeAllTabs();
+                 tc[i].style.backgroundColor = "#fff";
+                tc[i].style.color  = "#000"; 
+                document.getElementById(tc[i].getAttribute("data")).style.display = "block";
+            }
+        }
+        function closeAllTabs(){
+            var at = document.getElementsByClassName("tabs"),ts = document.getElementsByClassName("tab-selector");
+             for (let i = 0; i < at.length; i++) {
+                at[i].style.display = "none";
+            }
+              for (let i = 0; i < ts.length; i++) {
+                ts[i].style.backgroundColor = "#000";
+                ts[i].style.color = "#fff";
             }
         }
     </script>

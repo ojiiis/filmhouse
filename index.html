@@ -31,10 +31,13 @@
 #tab-header ul{
   display:flex;
   width: 100%;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 #tab-header ul li{
   list-style-type: none;
   padding: 10px 30px;
+  flex-shrink: 0;
 }
 #tab-header ul li.active{
 background: #fff;

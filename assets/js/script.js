@@ -94,7 +94,7 @@ if(document.getElementById("shows-lister")){
         const entriesHTML = Object.entries(data)
             .map(([key, value]) => `
                 <tr>
-                    <td>${key.replace("_", " ")}</td>
+                    <td>${key.replaceAll("_", " ")}</td>
                     <td>${value.replace(1,"Shown").replace(0, "Not shown")}</td>
                 </tr>`)
             .join("");
@@ -121,7 +121,7 @@ if(document.getElementById("shows-lister")){
          document.getElementById("loading-msg").textContent = `Your data has been sent and submited!`;
              setTimeout(()=>{
           location.reload()
-         //document.getElementById("loading").style.display = "none";
+        // document.getElementById("loading").style.display = "none";
      },3000);
      }
 

@@ -14,10 +14,11 @@
             </div>
         </div>
     <div id="modal">
+        <div id="modal-header"><caption>Confirm your entry before submition</caption></div>
           <div id="modal-inner">
             
             <table>
-                <caption>Confirm your entry before submition</caption>
+                
                 <thead>
                     <tr>
                         <th>Entry name</th>
@@ -29,11 +30,14 @@
                 </tbody>
             </table>
            
-            <div id="confirm-btn">
-                <button id="senddata">Send entry</button>
-                <button style="background-color: rgb(215, 67, 67);" class="close">Cancel</button>
-            </div>
+           
           </div>
+        <div id="modal-inner">
+                <div id="confirm-btn">
+                    <button id="senddata">Send entry</button>
+                    <button style="background-color: rgb(215, 67, 67);" class="close">Cancel</button>
+                </div>
+        </div>
     </div>
 
       <div id="app-wrapper">
@@ -51,6 +55,16 @@
                  <input type="search" placeholder="Search location." id="search_loc">
                  <input type="hidden" value="" id="location" name="location" >
                  <div id="input-search-result"></div>
+              </div>
+			  <div class="form-group">
+                 <label>Movie title</label>
+                 <input type="text" placeholder="Enter movie title." name="movie_title" id="movie-title">
+                
+              </div>
+			  <div class="form-group">
+                 <label>Movie time</label>
+                 <input type="time" placeholder="Enter movie title." name="movie_time" id="movie-time">
+                
               </div>
             <div class="form-group">
                 <label>Sound Level</label>
@@ -102,11 +116,11 @@
             </div>
             <div class="form-group">
                 <label>Managers Name</label>
-                <input type="text" name="managers_name" id="" value="" required>
+                <input type="text" name="managers_name" placeholder="Enter managers name." id="" value="" required>
             </div>
             <div class="form-group">
                 <label>Workers Name</label>
-                <input type="text" name="workers_name" id="" value="" required>
+                <input type="text" name="workers_name" placeholder="Enter workers name." id="" value="" required>
             </div>
             <div class="form-group">
                 <label>Comment</label>

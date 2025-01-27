@@ -44,8 +44,15 @@ color:#000;
     display: none;
    padding: 20px;
 }
+.tabs h3{
+margin: 30px 0;
+}
 .tabs.active{
     display: block;
+}
+.tab-main-content{
+    padding:20px;
+    margin-top: 30px;
 }
 </style>
      <div id="tab-container">
@@ -65,6 +72,9 @@ color:#000;
                 </div>
             </div>
             <h3>Presentation Checklist</h3>
+            <div class="tab-main-content">
+                <canvas id="myChart2"></canvas>
+            </div>
         </div>
         <div class="tabs" id="show_report">
             <div>
@@ -77,7 +87,10 @@ color:#000;
                     <div>To <input type="date"><input type="time"> </div>
                 </div>
             </div>
-           <h3>Film Show report</h3>
+           <h3>Film Show Report</h3>
+        <div class="tab-main-content">
+            <canvas id="myChart1"></canvas>
+        </div>
         </div>
      </div>
 
@@ -86,6 +99,7 @@ color:#000;
 
     <a href="presentation-checklist.html">presentation checklist</a>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.getElementById("filter-opener").onclick = ()=>{
             if(document.getElementById("filter-content").style.display == "" || document.getElementById("filter-content").style.display == "none"){
@@ -118,6 +132,46 @@ color:#000;
                 ts[i].style.color = "#fff";
             }
         }
+  
+        const ctx1 = document.getElementById('myChart1');
+    const ctx2 = document.getElementById('myChart2');
+
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+                new Chart(ctx2, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [20, 15, 6, 0, 10, 7],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
     </script>
 </body>
 </html>

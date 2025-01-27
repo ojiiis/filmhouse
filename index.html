@@ -4,10 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+    <div id="app-wrapper">
+            <div id="heading">
+                <img src="assets/images/logo.webp">
+                <h1>Admin</h1>
+            </div>
+<style>
+#tab-container{
+    padding:20px;
+}
+#filter-opener{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#filter-content{
+    display:none;
+}
+#filter-content div{
+    margin-bottom: 20px;
+}
+#tab-header ul{
+  display:flex;
+  width: 100%;
+}
+#tab-header ul li{
+  list-style-type: none;
+  padding: 10px 30px;
+}
+#tab-header ul li.active{
+background: #fff;
+color:#000;
+}
+.tabs{
+    display: none;
+   padding: 20px;
+}
+.tabs.active{
+    display: block;
+}
+</style>
+     <div id="tab-container">
+         <div id="tab-header">
+             <ul>
+                <li class="tab-selector active" data="presentation">Presentations</li>
+                <li data="tab-selector" data="show_report">Show report</li>
+             </ul>
+         </div>
+        <div class="tabs active" id="presentation">
+            <div>
+                <div id="filter-opener"><h2>Filter <i class="fa fa-filter"></i></h2>
+                <i class="fa fa-angle-down"></i></div>
+                <div id="filter-content">
+                    <div>From <input type="date"><input type="time"> </div>
+                    <div>To <input type="date"><input type="time"> </div>
+                </div>
+            </div>
+        1
+        </div>
+        <div class="tabs" id="show_report">
+        2
+        </div>
+     </div>
+
+    </div>
     <a href="film-show-report.html">film show report</a><br><br><br>
 
     <a href="presentation-checklist.html">presentation checklist</a>
+
+    <script>
+        document.getElementById("filter-opener").onclick = ()=>{
+            if(document.getElementById("filter-content").style.display == "" || document.getElementById("filter-content").style.display == "none"){
+                document.getElementById("filter-content").style.display = "block"
+            }else{
+                document.getElementById("filter-content").style.display = "none"
+            }
+        }
+    </script>
 </body>
 </html>

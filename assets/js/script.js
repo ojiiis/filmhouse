@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const api = "https://lin.com.ng/filmhouse/index.php";
+    const api = "https://lin.com.ng/filmhouse/";
     // Event handlers for need_comment and dont_need_comment
     const nc = document.getElementsByClassName("need_comment"),
           dnc = document.getElementsByClassName("dont_need_comment");
@@ -111,7 +111,8 @@ if(document.getElementById("shows-lister")){
     };
     document.getElementById("senddata").onclick = async ()=>{
     document.getElementById("loading").style.display = "flex";
-     const req = await fetch(api,{
+    const path = document.getElementById("senddata").getAttribute("data");
+     const req = await fetch(api+path,{
       method:"POST",
       body:document.getElementById("senddata").getAttribute("data")
      });

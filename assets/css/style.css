@@ -258,15 +258,61 @@ button {
     width: 100%;
     margin-top: 10px;
 }
-                        #content-lister{
+                        .content-lister{
                           overflow-x: auto;
+                          
                         }
                 .heading {
                     font-weight: bolder;
                     display: inline-block;
                 }
         
-                #content-lister div span {
+                .content-lister div span {
                     padding: 10px;
                     color: #fff;
+                }
+
+    
+                #tab-container{
+                    padding:20px;
+                }
+                .filter-opener{
+                    display:flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .filter-content{
+                    display:none;
+                }
+                .filter-content div{
+                    margin-bottom: 20px;
+                }
+                #tab-header ul{
+                  display:flex;
+                  width: 100%;
+                  flex-wrap: nowrap;
+                  overflow-x: auto;
+                }
+                #tab-header ul li{
+                  list-style-type: none;
+                  padding: 10px 30px;
+                  flex-shrink: 0;
+                }
+                #tab-header ul li.active{
+                background: #fff;
+                color:#000;
+                }
+                .tabs{
+                    display: none;
+                   padding: 20px;
+                }
+                .tabs h3{
+                margin: 30px 0;
+                }
+                .tabs.active{
+                    display: block;
+                }
+                .tab-main-content{
+                    padding:20px;
+                    margin-top: 30px;
                 }

@@ -6,6 +6,35 @@
     <title>Document</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+         table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                    font-size: 16px;
+                    text-align: left;
+                }
+        
+                th,
+                td {
+                    padding: 12px 15px;
+                    border: 1px solid #ddd;
+                }
+        
+                th {
+                    background-color: #303030;
+                    font-weight: bold;
+                }
+        
+                tr:nth-child(even) {
+                    background-color: #707070;
+                }
+        
+                tr:hover {
+                    background-color: #000;
+                }
+        
+    </style>
 </head>
 <body>
     <div id="app-wrapper">
@@ -65,17 +94,21 @@
             <div class="tab-main-content">
                 <canvas id="myChart1"></canvas>
             </div>
-            <div class="content-lister" id="show-report">
-                 <div>
-                    <span class="heading">Location</span><span class="heading">Show 1</span><span class="heading">Show 1</span>
-                 </div>
-                <div class="content">
-                    <span>Lekki -Imax</span><span>Not Shown</span><span>Shown</span>
-                </div>
-                <div class="content">
-                    <span>Lekki -Imax</span><span>Not Shown</span><span>Shown</span>
-                </div>
-            </div>
+            <table>
+                <thead>
+                 <tr>
+                    <th>Location</th>
+                    <th>Perfomance</th>
+                    <th>Total show</th>
+                    <th>Played show</th>
+                    <th>Failed show</th>
+                 </tr>
+                </thead>
+               <tbody id="show-report"> 
+              
+               </tbody>
+               
+            </table>
         </div>
      </div>
 
@@ -90,7 +123,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-       
+         var  label = [];
+         var value = [];
        (
         async ()=>{
            
@@ -99,7 +133,7 @@
             const time = `${(d.getHours().toString().length < 2)?"0"+d.getHours():d.getHours()}:${(d.getMinutes().toString().length < 2)?"0"+d.getMinutes():d.getMinutes()}`;
             const now = `${d.getFullYear()}-${((d.getMonth()+1).toString().length == 1)?"0"+(d.getMonth() + 1):d.getMonth()+1}-${(d.getDate().toString().length == 1)?"0"+d.getDate():d.getDate()}`;
             d.setDate(d.getDate() - 7);
-            const sevenDaysAgo = `${d.getFullYear()}-${((d.getMonth()+1).toString().length == 1)?"0"+(d.getMonth() + 1):d.getMonth()+1}-${(d.getDate().toString().length == 1)?"0"+d.getDate():d.getDate()}`;
+            const sevenDaysAgo = `${d.getFullYear()-1}-${((d.getMonth()+1).toString().length == 1)?"0"+(d.getMonth() + 1):d.getMonth()+1}-${(d.getDate().toString().length == 1)?"0"+d.getDate():d.getDate()}`;
             document.querySelector("#report-time2 input:nth-child(1)").value = now;
             document.querySelector("#report-time1 input:nth-child(1)").value = sevenDaysAgo;
             document.querySelector("#report-time2 input:nth-child(2)").value = time;
@@ -112,7 +146,47 @@
                 })
             });
             const res = await req.json();
-            console.log(res);
+         
+          
+            if(res.status){
+                label = [];
+                value = [];
+                res.data.forEach(element => {
+                 let tr =  document.createElement("tr");
+                 label.push(element.location);
+                 value.push(element.perfomance.slice(0,-1));
+                 const thead = ['location','perfomance','total_show','played_show','failed_show']
+                 for(let i = 0; i < thead.length; i++){
+                     let td = document.createElement("td");
+                     td.textContent = element[thead[i]];
+                     tr.append(td);
+                 }
+                 document.getElementById("show-report").appendChild(tr)
+               
+                 });
+            
+           
+            }
+           // console.log(value)
+           const ctx1 = document.getElementById('myChart1');
+          new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: label,
+                datasets: [{
+                    label: '% of perfomance',
+                    data: value,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
         }
        )();
 
@@ -128,7 +202,45 @@
                 })
             });
             const res = await req.json();
-            console.log(res);
+                if(res.status){
+                    label = [];
+                    value = [];
+              res.data.forEach(element => {
+               let tr =  document.createElement("tr");
+               label.push(element.location);
+               value.push(element.perfomance);
+               const thead = ['location','perfomance','total_show','played_show','failed_show']
+               for(let i = 0; i < thead.length; i++){
+                   let td = document.createElement("td");
+                   td.textContent = element[thead[i]];
+                   tr.append(td);
+               }
+               document.getElementById("show-report").appendChild(tr)
+             
+               });
+          
+         
+          }
+          const ctx1 = document.getElementById('myChart1');
+          new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: label,
+                datasets: [{
+                    label: '% of perfomance',
+                    data: value,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+            //console.log(res);
        }
 
        var fo =  document.getElementsByClassName("filter-opener");
@@ -170,28 +282,9 @@
             }
         }
   
-        const ctx1 = document.getElementById('myChart1');
+     
     const ctx2 = document.getElementById('myChart2');
-
-        new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-                new Chart(ctx2, {
+  new Chart(ctx2, {
                         type: 'bar',
                         data: {
                             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
